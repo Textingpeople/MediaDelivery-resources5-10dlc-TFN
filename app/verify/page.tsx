@@ -1,136 +1,113 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, Suspense } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { CheckCircle2, MessageSquare } from 'lucide-react';
+import { useState, Suspense } from 'react';
+import { CheckCircle } from 'lucide-react';
+import { BRAND, SUPPORT_EMAIL, PHONE_DISPLAY, PHONE_TEL } from '@/lib/siteConfig';
+import { PRIMARY, BLUE, ACCENT, BG, BORDER, TEXT_MUTED, TEXT } from '@/lib/theme';
 
-const NAVY = '#0f2744';
-const ACCENT = '#0d9488';
-const ACCENT_BG = '#f0fdfa';
-const IVORY = '#faf8f4';
+function getLinkError(destination: string | null): string {
+  if (!destination) return 'Invalid verification link. Destination is missing.';
+  if (!/^https?:\/\//i.test(destination)) {
+    return 'Invalid verification link. Destination must be an http or https URL.';
+  }
+  return '';
+}
 
 function VerifyPageContent() {
   const searchParams = useSearchParams();
-  const [phone, setPhone] = useState<string>('');
+  // Phone value is initialised from the `phone` query parameter (if present)
+  const [phone, setPhone] = useState<string>(() => searchParams.get('phone') ?? '');
   const [isRedirecting, setIsRedirecting] = useState(false);
 
-  useEffect(() => {
-    const phoneParam = searchParams.get('phone');
-    if (phoneParam) {
-      setPhone(phoneParam);
-    }
-  }, [searchParams]);
+  const destination = searchParams.get('destination');
+  const error = getLinkError(destination);
 
   const handleConfirm = () => {
+    if (error || !destination) return;
+
     setIsRedirecting(true);
+
+    // Build redirect URL with all parameters except 'phone'
     const params = new URLSearchParams();
     searchParams.forEach((value, key) => {
-      if (key !== 'phone') params.append(key, value);
+      if (key !== 'phone') {
+        params.append(key, value);
+      }
     });
-    const destination = searchParams.get('destination');
-    if (destination) {
-      window.location.href = `${destination}?${params.toString()}`;
-    } else {
-      // If no destination, just mark as done
-      setIsRedirecting(false);
-    }
-  };
 
-  const inputStyle = {
-    background: '#fff',
-    border: '1px solid #e8e4dc',
-    color: NAVY,
-    width: '100%',
-    borderRadius: '12px',
-    padding: '14px 16px',
-    fontSize: '20px',
-    fontWeight: 600,
-    textAlign: 'center' as const,
-    letterSpacing: '0.1em',
-    outline: 'none',
+    window.location.href = `${destination}?${params.toString()}`;
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-16" style={{ background: IVORY }}>
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ background: BG }}>
+      <div className="max-w-xl w-full rounded-2xl overflow-hidden" style={{ background: '#fff', border: `1px solid ${BORDER}`, boxShadow: '0 4px 24px rgba(11,31,58,0.08)' }}>
+        {/* Brand header (midnight blue) */}
+        <div className="px-6 py-5 text-center" style={{ background: PRIMARY, borderBottom: `4px solid ${ACCENT}` }}>
+          <p className="text-lg font-extrabold tracking-tight text-white" style={{ fontFamily: 'Georgia, serif' }}>{BRAND}</p>
+        </div>
 
-        {/* Card */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid #e8e4dc', boxShadow: '0 4px 24px rgba(15,39,68,0.08)' }}>
-          <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${NAVY}, ${ACCENT})` }} />
-
-          <div className="p-8 sm:p-10">
-            {/* Logo */}
-            <div className="flex justify-center mb-8">
-              <Link href="/">
-                <Image src="/LifeEase Concierge Logo.png" alt="LifeEase Concierge" width={160} height={54} className="h-12 w-auto" />
-              </Link>
+        <div className="p-4 sm:p-6 md:p-8">
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: PRIMARY }}>
+              <CheckCircle className="w-12 h-12" style={{ color: ACCENT }} />
             </div>
 
-            {/* Icon + heading */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5" style={{ background: ACCENT_BG }}>
-                <MessageSquare className="w-8 h-8" style={{ color: ACCENT }} />
-              </div>
-              <h1 className="text-2xl font-bold mb-2" style={{ color: NAVY, fontFamily: 'Georgia, serif' }}>
-                Confirm Your Number
-              </h1>
-            </div>
+            <h1 className="text-xl sm:text-2xl font-bold mb-6 px-2" style={{ color: TEXT, fontFamily: 'Georgia, serif' }}>
+              Validate your number.
+            </h1>
+
+            {error && (
+              <p role="alert" className="mb-6 text-sm font-medium text-red-700 bg-red-50 border border-red-300 rounded-lg p-3">
+                {error}
+              </p>
+            )}
 
             {/* Phone input */}
             <div className="mb-6">
-              <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-gray-500">
-                Mobile Phone Number
-              </label>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter phone number"
-                style={inputStyle}
+                aria-label="Phone number"
+                className="w-full rounded-lg p-3 sm:p-4 text-lg sm:text-xl font-bold placeholder:text-gray-500 tracking-wider text-center outline-none transition-colors"
+                style={{ background: BG, color: TEXT, border: `2px solid ${BORDER}` }}
               />
             </div>
 
-            {/* Submit button — always highlighted */}
+            {/* Confirm button */}
             <button
               onClick={handleConfirm}
               disabled={isRedirecting}
-              className="w-full py-4 rounded-xl text-base font-semibold text-white transition-all"
-              style={{
-                background: NAVY,
-                cursor: isRedirecting ? 'not-allowed' : 'pointer',
-                opacity: isRedirecting ? 0.7 : 1,
-              }}
+              className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg text-base sm:text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1E429F]"
+              style={{ background: isRedirecting ? '#64748B' : BLUE, cursor: isRedirecting ? 'not-allowed' : 'pointer' }}
             >
               {isRedirecting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Confirming...
+                  Redirecting...
                 </span>
               ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Confirm & Continue
-                </span>
+                <span className="block sm:inline">Verify Number</span>
               )}
             </button>
+          </div>
 
-            {/* Footer */}
-            <div className="mt-8 pt-6 text-center" style={{ borderTop: '1px solid #e8e4dc' }}>
-              <p className="text-xs text-gray-400">
-                <svg className="w-3.5 h-3.5 inline mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-                Secured by LifeEase Concierge
-              </p>
-            </div>
+          {/* Footer */}
+          <div className="text-center pt-6 space-y-1" style={{ borderTop: `1px solid ${BORDER}` }}>
+            <p className="text-xs" style={{ color: TEXT_MUTED }}>Secured by {BRAND}</p>
+            <p className="text-xs" style={{ color: TEXT_MUTED }}>
+              Need help?{' '}
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="underline link-blue">{SUPPORT_EMAIL}</a>
+              {' · '}
+              <a href={PHONE_TEL} className="underline link-blue">{PHONE_DISPLAY}</a>
+            </p>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -139,10 +116,10 @@ function VerifyPageContent() {
 export default function VerifyPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ background: IVORY }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: BG }}>
         <div className="text-center">
-          <div className="w-12 h-12 rounded-full border-2 border-transparent animate-spin mx-auto" style={{ borderTopColor: NAVY, borderRightColor: ACCENT }} />
-          <p className="mt-4 text-sm text-gray-500">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: ACCENT }}></div>
+          <p className="mt-4" style={{ color: TEXT_MUTED }}>Loading...</p>
         </div>
       </div>
     }>

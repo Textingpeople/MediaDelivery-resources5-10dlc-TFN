@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { WEBSITE_URL, SITE_TITLE, SITE_DESCRIPTION, BRAND } from "@/lib/siteConfig";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,31 +14,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  icons: {
-    icon: "/favicon.png",
-  },
-  title: "DayFlow | Personal Concierge & Virtual Assistance for Employees",
-  description: "Professional personal concierge and virtual assistance services for employees. We handle life's tasks — doctor appointments, groceries, travel planning, errands, and more.",
+  metadataBase: new URL(WEBSITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "DayFlow | Personal Concierge & Virtual Assistance for Employees",
-    description: "Professional personal concierge and virtual assistance services for employees. We handle life's tasks so you can focus on what matters.",
-    url: "https://lifeeaseconcierge.com",
-    siteName: "DayFlow",
-    images: [
-      {
-        url: "https://lifeeaseconcierge.com/ASC%20Verify%20Logo.png",
-        width: 500,
-        height: 167,
-        alt: "DayFlow",
-      },
-    ],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: WEBSITE_URL,
+    siteName: BRAND,
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "DayFlow | Personal Concierge & Virtual Assistance for Employees",
-    description: "Professional personal concierge and virtual assistance services for employees.",
-    images: ["https://lifeeaseconcierge.com/ASC%20Verify%20Logo.png"],
+    card: "summary",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 

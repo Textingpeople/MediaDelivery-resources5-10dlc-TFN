@@ -1,228 +1,114 @@
-import Link from 'next/link';
-import Image from 'next/image';
-
-const NAVY = '#0f2744';
-const ACCENT = '#0d9488';
-const IVORY = '#faf8f4';
-
-const NAV_LINKS = [
-  { href: '/product', label: 'Product' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-];
-
-const FOOTER_LINKS = {
-  employee: [
-    { href: '/login', label: 'Login' },
-    { href: '/signup', label: 'Create Account' },
-  ],
-  company: [
-    { href: '/product', label: 'Product' },
-    { href: '/about', label: 'About Us' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/consultation', label: 'Book a Demo' },
-  ],
-  legal: [
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/terms', label: 'Terms of Service' },
-  ],
-};
+import SampleMessages from '@/components/SampleMessages';
+import { LegalLayout, H2, H3, P, UL, A, Callout } from '@/components/legal/LegalUI';
+import {
+  BRAND, LEGAL_OPENING, DISCLAIMER_LINE, NO_SHARING_SENTENCE, SUPPORT_EMAIL, LEGAL_EMAIL,
+  PHONE_DISPLAY, PHONE_TEL, ADDRESS_ONE_LINE, LEGAL_NAME,
+} from '@/lib/siteConfig';
+import { BORDER } from '@/lib/theme';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen" style={{ background: IVORY, color: NAVY }}>
+    <LegalLayout title="Terms of Service">
+      <H2>1. Acceptance of Terms</H2>
+      <P>
+        These Terms of Service (&quot;Terms&quot;) are between you and {LEGAL_OPENING}. They govern your use of the {BRAND} personal planning app, this website and any related text messaging program (together, the &quot;Service&quot;). By creating an account or using the Service, you agree to these Terms and our <A href="/privacy">Privacy Policy</A>. If you do not agree, do not use the Service.
+      </P>
 
-      {/* Nav */}
-      <nav style={{ background: '#fff', borderBottom: '1px solid #e8e4dc' }} className="sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex-shrink-0">
-              <Image src="/LifeEase Concierge Logo.png" alt="LifeEase Concierge" width={500} height={167} className="h-14 w-auto" priority />
-            </Link>
-            <div className="hidden md:flex items-center gap-6">
-              {NAV_LINKS.map(l => (
-                <Link key={l.href} href={l.href} className="text-sm font-medium hover:opacity-70 transition-colors" style={{ color: NAVY }}>{l.label}</Link>
-              ))}
-              <div className="w-px h-5" style={{ background: '#e8e4dc' }} />
-              <Link href="/login" className="px-5 py-2.5 rounded-lg text-sm font-semibold" style={{ border: `2px solid ${NAVY}`, color: NAVY }}>Login</Link>
-              <Link href="/consultation" className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white" style={{ background: '#0f2744' }}>Book Demo</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <H2>2. Description of Service</H2>
+      <P>
+        {BRAND} is an employer-provided daily planner and scheduling app. Employees build a daily plan, keep to-do lists, set personal reminders and, if they choose, connect a personal calendar (read-only) and opt in to text messages. The Service includes:
+      </P>
+      <UL>
+        <li>A daily plan that combines your events and to-dos in one view</li>
+        <li>To-do lists</li>
+        <li>Personal reminders delivered in the app or, if you opt in, by text</li>
+        <li>Calendar sync with a personal calendar (read-only)</li>
+        <li>A shared household calendar for family</li>
+        <li>Morning and evening routines</li>
+        <li>Focus blocks</li>
+        <li>A weekly review</li>
+      </UL>
 
-      {/* Header */}
-      <section className="py-14" style={{ background: NAVY }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Terms of Service</h1>
-          <p className="text-sm" style={{ color: '#94a3b8' }}>Last Updated: December 30, 2025</p>
-        </div>
-      </section>
+      <H2>3. Eligibility and Accounts</H2>
+      <P>
+        The Service is available to employees of participating employers. You must be at least 18 years old and have a valid Company ID provided by your employer. You agree to provide accurate information and to keep your account details secure. Your employer&apos;s program administrator may approve or remove access to the Service.
+      </P>
 
-      {/* Content */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="space-y-8 text-gray-600 leading-relaxed">
+      <H2>4. Important Disclaimer</H2>
+      <Callout><strong>{DISCLAIMER_LINE}</strong></Callout>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>1. Acceptance of Terms</h2>
-            <p>By accessing or using LifeEase Concierge&apos;s personal concierge service ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Service.</p>
-          </div>
+      <H2>5. What We Do Not Do</H2>
+      <UL>
+        <li>We do not monitor your work activity or report on employees.</li>
+        <li>We do not share your plans, to-dos or reminders with your employer.</li>
+        <li>Calendar connections are read-only, and you can remove a connection at any time.</li>
+        <li>We do not provide medical, financial or legal advice.</li>
+        <li>We are not responsible for missed events if a reminder is not delivered. Please do not rely on {BRAND} as your only way to keep track of anything time-sensitive.</li>
+      </UL>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>2. Description of Service</h2>
-            <p className="mb-3">LifeEase Concierge provides a personal concierge and virtual assistance service offered as an employee benefit. The Service includes:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Text-based concierge request submission</li>
-              <li>Appointment scheduling and errand coordination</li>
-              <li>Travel planning and research assistance</li>
-              <li>Real-time task updates and confirmations</li>
-              <li>Employee portal access</li>
-            </ul>
-          </div>
+      <H2>6. Acceptable Use</H2>
+      <P>You agree not to use the Service to:</P>
+      <UL>
+        <li>Violate any law or the rights of others</li>
+        <li>Submit false, abusive or harassing content</li>
+        <li>Send unlawful or unsafe content through the Service</li>
+        <li>Interfere with or disrupt the Service</li>
+        <li>Impersonate any person or entity</li>
+      </UL>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>3. Account Registration and Security</h2>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>3.1 Account Creation</h3>
-            <p className="mb-3">To use the Service, you must create an account using your employer-provided access code and employee ID. You are responsible for maintaining the confidentiality of your account credentials.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>3.2 Account Security</h3>
-            <p className="mb-3">You agree to immediately notify us of any unauthorized use of your account or any other breach of security.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>3.3 Account Eligibility</h3>
-            <p>You must be at least 18 years old and an active employee of a participating employer to use the Service.</p>
-          </div>
+      <H2>7. SMS Program</H2>
+      <H3>7.1 Message types</H3>
+      <P>
+        If you opt in, {BRAND} may send two types of text messages: <strong>account notifications</strong> (an optional morning agenda, reminders you set and account updates) and <strong>promotional messages</strong> (planning tips and new features). The two types have separate, optional checkboxes on the sign-up form, and both are unchecked by default. A mobile number is required only if you opt in to texts.
+      </P>
+      <H3>7.2 Consent</H3>
+      <P>
+        Opting in to text messages is optional and is not required to submit the sign-up form. Consent is not a condition of purchasing any products or services.
+      </P>
+      <SampleMessages level="h3" numbering="7.3" />
+      <H3>7.4 Frequency, rates and opting out</H3>
+      <P>
+        Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> to any message to opt out at any time; you will receive one confirmation message and then no further texts. Reply <strong>HELP</strong> for help, or contact <A href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</A> or <A href={PHONE_TEL}>{PHONE_DISPLAY}</A>.
+      </P>
+      <H3>7.5 Carriers</H3>
+      <P>Carriers are not liable for delayed or undelivered messages.</P>
+      <H3>7.6 Your mobile information</H3>
+      <P><strong>{NO_SHARING_SENTENCE}</strong></P>
+      <P>See our <A href="/sms-policy">SMS Policy</A> for more detail.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>4. Acceptable Use Policy</h2>
-            <p className="mb-3">You agree not to use the Service to:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Violate any applicable laws, regulations, or third-party rights</li>
-              <li>Submit fraudulent, abusive, or harassing requests</li>
-              <li>Interfere with or disrupt the Service or servers</li>
-              <li>Impersonate any person or entity</li>
-              <li>Use the Service for any illegal or unauthorized purpose</li>
-            </ul>
-          </div>
+      <H2>8. Service Availability</H2>
+      <P>We aim to keep the Service available Monday through Saturday during our support hours, but we do not guarantee uninterrupted or error-free access. We may perform maintenance or make changes to the Service from time to time.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>5. SMS Communications</h2>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>5.1 Opt-In Requirements</h3>
-            <p className="mb-3">By providing your mobile phone number and opting in during registration, you consent to receive SMS messages from LifeEase Concierge related to your concierge requests and account notifications. Message and data rates may apply. Message frequency varies.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>5.2 Opt-Out</h3>
-            <p className="mb-3">You may opt out of SMS communications at any time by replying STOP to any message or contacting us at support@lifeeaseconcierge.com.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>5.3 Help</h3>
-            <p className="mb-3">Reply HELP for assistance or contact support@lifeeaseconcierge.com.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>5.4 Carrier Liability</h3>
-            <p>Carriers are not liable for delayed or undelivered messages.</p>
-          </div>
+      <H2>9. Intellectual Property</H2>
+      <P>The Service and its content, features and branding are owned by {LEGAL_NAME} and protected by intellectual property laws. You may not copy, modify or distribute any part of the Service without our written permission.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>6. Service Availability</h2>
-            <p className="mb-3">We strive to maintain consistent service availability Monday through Saturday, 8am–8pm ET. We may perform scheduled maintenance with advance notice when possible. We do not guarantee uninterrupted access.</p>
-          </div>
+      <H2>10. Privacy</H2>
+      <P>Your use of the Service is also governed by our <A href="/privacy">Privacy Policy</A>, which explains how we collect and use information.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>7. Intellectual Property Rights</h2>
-            <p className="mb-3">The Service and all content, features, and functionality are owned by LifeEase Concierge and are protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, or distribute any part of the Service without our express written permission.</p>
-          </div>
+      <H2>11. Disclaimer of Warranties</H2>
+      <P>THE SERVICE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, TO THE FULLEST EXTENT PERMITTED BY LAW.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>8. Data and Privacy</h2>
-            <p>Your use of the Service is also governed by our <Link href="/privacy" className="hover:underline font-medium" style={{ color: ACCENT }}>Privacy Policy</Link>. By using the Service, you consent to our collection and use of information as described in the Privacy Policy.</p>
-          </div>
+      <H2>12. Limitation of Liability</H2>
+      <P>TO THE MAXIMUM EXTENT PERMITTED BY LAW, {LEGAL_NAME.toUpperCase()} AND ITS OFFICERS, EMPLOYEES AND AGENTS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR DATA, ARISING FROM YOUR USE OF THE SERVICE. OUR TOTAL LIABILITY FOR ANY CLAIM RELATING TO THE SERVICE WILL NOT EXCEED THE AMOUNT YOU PAID US, IF ANY, FOR THE SERVICE IN THE TWELVE MONTHS BEFORE THE CLAIM.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>9. Disclaimers and Limitations of Liability</h2>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>9.1 Service "As Is"</h3>
-            <p className="mb-3">THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-            <h3 className="font-semibold mb-2" style={{ color: NAVY }}>9.2 Limitation of Liability</h3>
-            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, ASC VERIFY SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICE.</p>
-          </div>
+      <H2>13. Termination</H2>
+      <P>You may stop using the Service at any time by contacting us. We may suspend or end your access if you violate these Terms or if your employer&apos;s program ends.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>10. Indemnification</h2>
-            <p>You agree to indemnify, defend, and hold harmless LifeEase Concierge and its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses arising from your use of the Service or your violation of these Terms.</p>
-          </div>
+      <H2>14. Changes to These Terms</H2>
+      <P>We may update these Terms from time to time. We will post the updated Terms on this page with a new &quot;Last updated&quot; date. Continued use of the Service after changes take effect means you accept the updated Terms.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>11. Termination</h2>
-            <p className="mb-3">You may terminate your account at any time by contacting us. We may suspend or terminate your access to the Service at any time, with or without cause, including for violation of these Terms or non-payment by your employer.</p>
-          </div>
+      <H2>15. Governing Law</H2>
+      <P>These Terms are governed by the laws of the State of New Jersey, without regard to its conflict-of-laws rules.</P>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>12. Dispute Resolution</h2>
-            <p className="mb-3">Before filing a claim, you agree to contact us and attempt to resolve the dispute informally. Any unresolved disputes shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association.</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>13. General Provisions</h2>
-            <p className="mb-3">These Terms shall be governed by the laws of the United States. These Terms, together with our Privacy Policy, constitute the entire agreement between you and LifeEase Concierge regarding the Service.</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>14. Changes to Terms</h2>
-            <p>We reserve the right to modify these Terms at any time. We will notify you of material changes by posting the updated Terms on our website. Your continued use of the Service after changes become effective constitutes acceptance of the modified Terms.</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>15. Contact Information</h2>
-            <p className="mb-4">If you have any questions about these Terms, please contact us:</p>
-            <div className="rounded-2xl p-6" style={{ background: '#fff', border: '1px solid #e8e4dc' }}>
-              <p className="mb-2 text-sm"><strong style={{ color: NAVY }}>Email:</strong> <a href="mailto:legal@lifeeaseconcierge.com" className="hover:underline" style={{ color: ACCENT }}>legal@lifeeaseconcierge.com</a></p>
-              <p className="mb-2 text-sm"><strong style={{ color: NAVY }}>Support:</strong> <a href="mailto:support@lifeeaseconcierge.com" className="hover:underline" style={{ color: ACCENT }}>support@lifeeaseconcierge.com</a></p>
-              <p className="text-sm"><strong style={{ color: NAVY }}>Phone:</strong> <a href="tel:+1855-743-8920" className="hover:underline" style={{ color: ACCENT }}>(855) 743-8920</a></p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ background: '#0a1e38', color: '#94a3b8' }} className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <Image src="/LifeEase Concierge Logo.png" alt="LifeEase Concierge" width={160} height={54} className="h-10 w-auto mb-3 brightness-0 invert" />
-              <p className="text-sm leading-relaxed">Personal concierge and virtual assistance services for employees.</p>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-3 text-sm">Employee Access</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/login" className="hover:text-white transition-colors">Login</Link></li>
-                <li><Link href="/login" className="hover:text-white transition-colors">Create Account</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-3 text-sm">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/product" className="hover:text-white transition-colors">Product</Link></li>
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="/consultation" className="hover:text-white transition-colors">Book a Demo</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-3 text-sm">Legal & Contact</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                <li className="pt-1">support@lifeeaseconcierge.com</li>
-                <li>(855) 743-8920</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <span>&copy; 2025 LifeEase Concierge. All rights reserved.</span>
-            <div className="flex items-center gap-4">
-              <a href="https://g.page/lifeease-concierge" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity" title="Google My Business">
-                <img src="/google-logo.svg" alt="Google My Business" className="w-5 h-5" />
-                <span className="text-xs" style={{ color: '#94a3b8' }}>Google</span>
-              </a>
-              <a href="https://www.linkedin.com/company/lifeease-concierge" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity" title="LinkedIn">
-                <img src="/linkedin-logo.svg" alt="LinkedIn" className="w-5 h-5" />
-                <span className="text-xs" style={{ color: '#94a3b8' }}>LinkedIn</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <H2>16. Contact</H2>
+      <P>Questions about these Terms? Contact us:</P>
+      <div className="rounded-2xl p-6 text-sm space-y-1 mb-6" style={{ background: '#fff', border: `1px solid ${BORDER}` }}>
+        <p><strong>{LEGAL_NAME}</strong> d/b/a {BRAND}</p>
+        <p>{ADDRESS_ONE_LINE}</p>
+        <p>Legal: <A href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</A></p>
+        <p>Support: <A href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</A></p>
+        <p>Phone: <A href={PHONE_TEL}>{PHONE_DISPLAY}</A></p>
+      </div>
+    </LegalLayout>
   );
 }
